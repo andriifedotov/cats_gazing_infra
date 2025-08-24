@@ -8,8 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: cats.localhost
-    http:
+  - http:
       paths:
       - path: /
         pathType: Prefix
