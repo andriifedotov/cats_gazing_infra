@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cats-gazing
+  namespace: application
   labels:
     app: cats-gazing
 spec:
