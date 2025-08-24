@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cats-gazing
+  labels:
+    app: cats-gazing
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cats-gazing
+  template:
+    metadata:
+      labels:
+        app: cats-gazing
+    spec:
+      containers:
+      - name: cats-gazing
+        image: docker.io/andriifedotov/cats-gazing:latest   # updated by CI
+        ports:
+        - containerPort: 5000

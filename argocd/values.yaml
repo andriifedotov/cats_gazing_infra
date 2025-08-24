@@ -1,0 +1,20 @@
+global:
+  domain: argocd.localhost
+
+configs:
+  params:
+    server.insecure: true   # Tell Argo CD to expect plain HTTP behind Ingress TLS termination
+
+server:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - argocd.localhost
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    extraTls:
+      - hosts:
+          - argocd.localhost
+        secretName: wildcard-tls
