@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cats-gazing-postgres
+  namespace: application
+  labels:
+    app: cats-gazing-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cats-gazing-postgres
+  template:
+    metadata:
+      labels:
+        app: cats-gazing-postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: cats-gazing-db-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: cats-gazing-db-secret
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: cats-gazing-db-secret
+              key: POSTGRES_DB
+        volumeMounts:
+        - name: pgdata
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: pgdata
+        emptyDir: {}  # or use PersistentVolumeClaim for production

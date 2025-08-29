@@ -4,17 +4,28 @@ metadata:
   name: cats-gazing
   namespace: application
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    # This is the standard way to forward headers for HTTPS
+    nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
 spec:
   ingressClassName: nginx
   rules:
-  - host: andriifedotovcatsdemoapp.duckdns.org
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: cats-gazing
-            port:
-              number: 80
+    - host: andriifedotovcatsdemoapp.duckdns.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cats-gazing
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - andriifedotovcatsdemoapp.duckdns.org
+      secretName: cats-gazing-tls

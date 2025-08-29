@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: cats-gazing
   namespace: application
-  labels:
-    app: cats-gazing
 spec:
   replicas: 2
   selector:
@@ -20,3 +18,11 @@ spec:
         image: docker.io/andriifedotov/cats-gazing:a1ee05f97c050b5ba7ef3a867b231f2057f6a4f3
         ports:
         - containerPort: 5000
+        volumeMounts:
+        - name: db-secret
+          mountPath: /etc/secrets/db
+          readOnly: true
+      volumes:
+      - name: db-secret
+        secret:
+          secretName: cats-gazing-db-secret
