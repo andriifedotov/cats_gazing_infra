@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: cats-gazing
-        image: docker.io/andriifedotov/cats-gazing:2819f03ea6d46dd4732e17d6b554683d5a528325
+        image: docker.io/andriifedotov/cats-gazing:823accb4cbd1e4186e29e056cbb5ef8faac595b8
         ports:
         - containerPort: 5000
